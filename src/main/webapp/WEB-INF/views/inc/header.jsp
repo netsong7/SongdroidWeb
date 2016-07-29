@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,3 +62,9 @@
 </nav>
 
 <jsp:include page="/WEB-INF/views/inc/popupLogin.jsp" />
+
+<!-- jQuery -->
+<script src="/resources/bootstrap3/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/bootstrap3/js/bootstrap.min.js"></script>

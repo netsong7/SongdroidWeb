@@ -1,4 +1,4 @@
-package com.songdroid.spring;
+package com.songdroid.spring.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

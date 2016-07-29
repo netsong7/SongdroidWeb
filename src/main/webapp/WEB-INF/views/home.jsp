@@ -99,9 +99,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <ul class="list-unstyled">
-                                <li><a href="board.app?cmd=CREATE_BOARD">MVC 멀티 게시판</a></li>
-                                <li><a href="createBoard.spr">스프링 멀티 게시판</a></li>
-                                <li><a href="chatting.app">웹소켓을 이용한 채팅</a></li>
+                                <li><a href="board/create">스프링 멀티 게시판</a></li>
+                                <li><a href="websocket/chatting">웹소켓을 이용한 채팅</a></li>
                                 <li><a href="#">Category Name</a></li>
                             </ul>
                         </div>
