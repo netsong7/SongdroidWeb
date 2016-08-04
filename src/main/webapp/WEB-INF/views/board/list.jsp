@@ -8,7 +8,7 @@
 			function(){
 				$("#board_write").click(
 					function(){
-						var url ="boardWrite.spr?board_num=${board_num}";
+						var url ="/songdroid/board/write?board_num=${board_num}";
 						$(location).attr('href',url);
 					}
 				);
@@ -19,7 +19,7 @@
 <div class="container">
 	<div class="row" align="center">
 		<div class="col-lg-12 text-center v-center">
-			<h2>멀티 게시판</h2>
+			<h2>${board_disp_name}</h2>
 			<p class="lead">Bootstrap 3와 Spring을 이용한 멀티 게시판</p>
 			<br>
 			<form class="col-lg-11">
@@ -50,7 +50,7 @@
 						<tr>
 							<td>${board["wr_num"]}</td>
 							<td><a
-								href='readBoard.spr?wr_num=${board["wr_num"]}&board_num=${board_num}'>${board["wr_title"]}</a>
+								href='/songdroid/board/read?wr_num=${board["wr_num"]}&board_num=${board_num}'>${board["wr_title"]}</a>
 							</td>
 							<td>${board["wr_writer"]}</td>
 							<td>${board["wr_date"]}</td>

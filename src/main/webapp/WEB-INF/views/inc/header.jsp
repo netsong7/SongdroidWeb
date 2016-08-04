@@ -9,10 +9,10 @@
     <title>Blog Home - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/resources/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/songdroid/resources/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/resources/bootstrap3/css/blog-home.css" rel="stylesheet">
+    <link href="/songdroid/resources/bootstrap3/css/blog-home.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,7 +64,7 @@
 <jsp:include page="/WEB-INF/views/inc/popupLogin.jsp" />
 
 <!-- jQuery -->
-<script src="/resources/bootstrap3/js/jquery.js"></script>
+<script src="/songdroid/resources/bootstrap3/js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/resources/bootstrap3/js/bootstrap.min.js"></script>
+<script src="/songdroid/resources/bootstrap3/js/bootstrap.min.js"></script>

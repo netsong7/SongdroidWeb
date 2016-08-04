@@ -27,11 +27,12 @@ $("document").ready(
 
 				$.ajax({
 					type : "POST",
-					url : "/board/create",
+					url : "/songdroid/board/create",
 					data : $('#f1').serialize(), // 폼데이터 직렬화
 					contentType : "application/x-www-form-urlencoded; charset=utf-8",
 					dataType : "text",
 					success : function(data) { // data: 백엔드에서 requestBody 형식으로 보낸 데이터를 받는다.
+						//alert(data);
 						if (data.trim() == "true") {
 							$("#resultDisplay").text("이미 테이블명이 사용중입니다. 다른 이름을 입력해주세요.");
 						} 
@@ -99,14 +100,19 @@ $("document").ready(
 	<br />
 	<div class="row">
 		<h2>게시판 목록</h2>
-		<ul>
-			<c:forEach var="table" items="${requestScope.tableList}">
-				<li><a href='board/list?board_num=${table["board_num"]}'>${table["board_disp_name"]}(${table["board_tab_name"]}
-						: ${table["board_create_date"]})</a>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href='/board/drop?board_num=${table["board_num"]}'>삭제</a></li>
-			</c:forEach>
-		</ul>
+		<table class="table table-striped table-hover table-condensed" style="width:60%">
+		<c:forEach var="table" items="${requestScope.tableList}">
+			<tr>
+				<td>
+				<a href='/songdroid/board/list?board_num=${table["board_num"]}'>${table["board_disp_name"]}(${table["board_tab_name"]}
+				: ${table["board_create_date"]})</a>
+				</td>
+				<td>
+				<a href='/songdroid/board/drop?board_num=${table["board_num"]}'>삭제</a>
+				</td>
+			</tr>
+		</c:forEach>
+		</table>
 	</div>
 </div>
 

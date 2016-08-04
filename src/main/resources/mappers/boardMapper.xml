@@ -3,27 +3,41 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.songdroid.mappers.boardMapper">
-	<!-- 전체 글보기 -->
+	<!-- 전체  테이블 목록 보기 -->
 	<select id="getTables" resultType="MasterBoardDto">
 		select * from tblBoardMaster
 	</select>
 	
+	<!-- 게시판 리스트 페이지에 제목을 출력하기 위해 사용함. -->
+	<select id="getTableDispName" resultType="String">
+		select board_disp_name from tblBoardMaster where board_num=#{board_num}
+	</select>
+	
 	<!-- 테이블 만들기  -->
 	<insert id="create" parameterType="MasterBoardDto">
-		insert into tblBoardMaster(board_disp_name, board_tab_name, board_create_date, board_reply, board_comment, board_upload) 
+		insert into tblBoardMaster(board_disp_name, board_tab_name, board_create_date, 
+			board_reply, board_comment, board_upload) 
 		values(#{board_disp_name}, #{board_tab_name}, now(), #{board_reply}, #{board_comment}, #{board_upload})
 	</insert>
 	
 	<!-- 이미 만들어진 7개의 테이블을 조회하기 위해 만들었다. -->
-	<select id="getDuplicatedTableName" parameterType="String" resultType="String">
-		select table_name from INFORMATION_SCHEMA.TABLES where  TABLE_SCHEMA = 'netsong7' and table_name=#{board_tab_name}
+	<select id="getExistDuplicatedTableName" parameterType="String" resultType="String">
+		select table_name from INFORMATION_SCHEMA.TABLES where  
+		TABLE_SCHEMA = 'netsong7' and table_name=#{board_tab_name}
 	</select>
 	
-	<!-- 테이블 삭제를 위한 기능 -->
+	<!-- Master테이블 내에 이미 만들어진 테이블을 조회(중복된 테이블이 생성되는 것을 방지하기 위해 -->
+	<select id="getMasterDuplicatedTableName" parameterType="String" resultType="String">
+		select board_tab_name from tblboardmaster 
+		where  board_tab_name = #{board_tab_name}
+	</select>
+	
+	<!-- 테이블 삭제를 위해 글번호 조회 -->
 	<select id="getBoardBasic" parameterType="int" resultType="int">
 		select wr_num from tblBoardBasic where board_num=#{board_num}
 	</select>
 	
+	<!-- 테이블 삭제 -->
 	<delete id="allDropBoard" parameterType="java.util.Map">
 		<foreach  item="item" collection="list">
            	delete from tblBoardComment where wr_num=#{item.list};
@@ -34,29 +48,53 @@
 		delete from tblBoardMaster where board_num=#{board_num};
 	</delete>
 	
-	<!-- 각 테이블의 리스트 페이지 -->
+	<!-- 각 테이블의 리스트 페이지(업로드나 댓글 및 답변을 달았을 경우에 해당 정보도 가져와야 한다.) -->
 	<select id="getBoardList" parameterType="int" resultType="BasicBoardDto">
-		select wr_num, wr_title, wr_writer, wr_date, wr_counter from tblBoardBasic where board_num=#{board_num}
+		<if test="wr_num != #{wr_num}">
+		
+		</if>
+		select wr_num, wr_title, wr_writer, wr_date, wr_counter
+		from tblBoardBasic 
+		where board_num=#{board_num}
 	</select>
 	
-	<!-- 마스터 테이블의 정보 알아내기 -->
+	<!-- 마스터 테이블의 정보 알아내기(글쓰기 페이지에서 선택한 옵션을 알아내기 위해 필요하다. -->
 	<select id="getMasterTable" parameterType="int" resultType="MasterBoardDto">
 		select * from tblBoardMaster where board_num=#{board_num}
 	</select>
 	
-	<insert id="writeBoard">
-		insert into tblBoardBasic(wr_title, wr_writer, wr_contents, wr_email, wr_home, wr_counter, wr_ip, wr_pass, wr_date, board_num) 
-		values(#{wr_title}, #{wr_writer}, #{wr_contents}, #{wr_email}, #{wr_home}, 0, #{wr_ip}, #{wr_pass}, now(), #{board_num})
+	<!-- 글쓰기 기능 -->
+	<insert id="writeBoard" useGeneratedKeys="true" keyProperty="wr_num">
+		insert into tblBoardBasic(wr_title, wr_writer, wr_contents, wr_email, 
+			wr_home, wr_counter, wr_ip, wr_pass, wr_date, board_num) 
+		values(#{wr_title}, #{wr_writer}, #{wr_contents}, #{wr_email}, 
+			#{wr_home}, 0, #{wr_ip}, #{wr_pass}, now(), #{board_num})
 	</insert>
 	
-	<!-- 댓글 기능 -->
+	<!-- 업로드 기능 -->
+	<insert id="uploadBoard">
+		insert into tblBoardUpload(wr_num, wr_file) 
+		values(#{wr_num}, #{wr_file})
+	</insert>
+	
+	<!-- 댓글 저장하기 기능 -->
 	<insert id="setCommentBoard">
 		insert into tblBoardComment(co_name, co_comment, co_date, wr_num) 
 		values(#{co_name}, #{co_comment}, #{co_date}, #{co_num})
 	</insert>
 	
+	<!-- 댓글 읽어오기 기능 -->
 	<select id="getCommentBoard" resultType="CommentBoardDto">
 		select * from tblBoardComment where wr_num = #{wr_num}
+	</select>
+	
+	<!-- 글 읽기 기능 -->
+	<select id="getRead" resultType="BasicBoardDto">
+		select basic.wr_num, wr_title, wr_writer, wr_contents, wr_email, 
+			wr_home, wr_counter, wr_ip, wr_pass, wr_file
+		from tblBoardBasic basic inner join tblBoardUpload upload
+		on basic.wr_num = upload.wr_num
+		where basic.wr_num = #{wr_num}
 	</select>
 </mapper>
 

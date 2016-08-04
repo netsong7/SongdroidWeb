@@ -16,14 +16,15 @@
             <div class="well well-sm">
          	<c:choose> 
          		<c:when test='${master["board_upload"] == "y"}'>
-             		<form class="form-horizontal" method="post" action='boardWrite.spr?cmd=WRITE_PROC_UPLOAD_BOARD' enctype="multipart/form-data">
+             		<form class="form-horizontal" method="post" action='/songdroid/board/write?cmd=WRITE_PROC_UPLOAD_BOARD' enctype="multipart/form-data">
              	</c:when>
              	<c:otherwise>
-             		<form class="form-horizontal" method="post" action='boardWrite.spr?cmd=WRITE_PROC_BOARD' >
+             		<form class="form-horizontal" method="post" action='/songdroid/board/write?cmd=WRITE_PROC_BOARD' >
              	</c:otherwise>
             </c:choose>
                 	<input type="hidden" name="board_num" value='${master["board_num"]}' />
                 	<input type="hidden" name="board_upload" value='${master["board_upload"]}' />
+                	<input type="hidden" name="wr_ip" value='${pageContext.request.remoteAddr}'/>
                     <fieldset>
                         <legend class="text-center header">글을 작성해 주세요</legend>
 
@@ -65,7 +66,7 @@
 	                        <div class="form-group">
 	                            <span class="col-md-2 text-center">업로드</span>
 	                            <div class="col-md-8">
-	                                <input id="wr_file" name="wr_file" type="file" placeholder="Upload"">
+	                                <input id="wr_file" name="wr_file" type="file" placeholder="Upload">
 	                            </div>
 	                        </div>
 						</c:if>

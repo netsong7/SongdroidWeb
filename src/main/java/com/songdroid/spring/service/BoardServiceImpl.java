@@ -32,20 +32,34 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	// 마스터 테이블 정보 알아내기
-	public MasterBoardDto getMasterTable(int boardNum){
-		return null;
+	public MasterBoardDto getMasterTable(int board_num){
+		return dao.getMasterTable(board_num);
 	}
 	
 	public List getBoardList(int board_num){
-		return null;
+		return dao.getBoardList(board_num);
 	}
 	
+	// 글 저장 페이지 기능
 	public void writeBoard(BasicBoardDto basicDto){
+		/*
+		logger.info("contents : " + basicDto.getWr_contents());
+		logger.info("email : " + basicDto.getWr_email());
+		logger.info("home : " + basicDto.getWr_home());
+		logger.info("ip : " + basicDto.getWr_ip());
+		logger.info("pass : " + basicDto.getWr_pass());
+		logger.info("title : " + basicDto.getWr_title());
+		logger.info("writer : " + basicDto.getWr_writer());
+		logger.info("board_num : " + new String().valueOf(basicDto.getBoard_num()));
+		*/
+		
+		Integer result = dao.writeBoard(basicDto);
+		//logger.info("글 저장 여부 : " + result.toString());
 	}
 	
 	// 글 읽기 페이지 기능
-	public BasicBoardDto getBoard(int wr_num, String board_upload){
-		return null;
+	public BasicBoardDto getBoard(int wr_num){
+		return dao.getBoard(wr_num);
 	}
 	
 	// 테이블 이름 중복검사
@@ -65,5 +79,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	public List getCommentList(int wr_num){
 		return null;
+	}
+
+	@Override
+	public String getTableDispName(int board_num) {
+		return dao.getTableDispName(board_num);
 	}
 }
